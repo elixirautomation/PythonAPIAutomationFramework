@@ -1,0 +1,16 @@
+#### Local Commands #####
+
+## Run tests based on marks (smoke, regression)
+
+py.test -m smoke --alluredir ExecutionReports/
+py.test -m regression --alluredir ExecutionReports/
+
+## Cleanup cache and run the tests
+py.cleanup -p && py.test -m smoke --alluredir ExecutionReports/
+py.cleanup -p && py.test -m regression --alluredir ExecutionReports/
+
+## Only cleanup cache
+py.cleanup -p
+
+#### Trigger Allure Reports
+allure serve ExecutionReports

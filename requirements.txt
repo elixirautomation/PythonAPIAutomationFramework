@@ -1,0 +1,13 @@
+# Framework
+pytest
+requests
+pycmd
+
+# Reporting
+allure-pytest
+pytest-reportportal
+
+# Data Driven
+pyexcel
+pyexcel-xls
+pyexcel-xlsx

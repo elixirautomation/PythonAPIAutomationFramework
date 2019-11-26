@@ -1,0 +1,14 @@
+*.pc
+*.github
+*.pyc
+*.pyo
+*.swp
+*.swo
+*.pytest_cache/
+*.idea
+*.DS_Store
+__pycache__
+Logs/
+ExecutionReports/
+venv/
+.vscode
