@@ -55,8 +55,9 @@
 ## Report Portal Integration
 - Install and Configure [Report Portal](https://reportportal.io/download)
 
-- Change Configuration in pytest.ini file 
+- Change/ Enable Configuration in pytest.ini file 
   - rp_uuid
+  - rp_launch
   - rp_endpoint
   - rp_project
 

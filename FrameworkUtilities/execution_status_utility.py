@@ -1,5 +1,6 @@
 """ This module contains the methods to conclude the execution status. """
 
+import pytest
 import logging
 from traceback import print_stack
 import FrameworkUtilities.logger_utility as log_utils
@@ -26,14 +27,14 @@ class ExecutionStatus:
                 if result:
                     self.result_list.append("PASS")
                     self.log.info(
-                        "### VERIFICATION SUCCESSFUL :: " + test_name)
+                        "### STEP SUCCESSFUL :: " + test_name)
                 else:
                     self.result_list.append("FAIL")
-                    self.log.error("### VERIFICATION FAILED :: " + test_name)
+                    self.log.error("### STEP FAILED :: " + test_name)
 
             else:
                 self.result_list.append("FAIL")
-                self.log.error("### VERIFICATION FAILED :: " + test_name)
+                self.log.error("### STEP FAILED :: " + test_name)
         except Exception as ex:
             self.result_list.append("FAIL")
             self.log.error("### EXCEPTION OCCURRED :: {}".format(ex))
@@ -59,12 +60,15 @@ class ExecutionStatus:
 
         self.set_result(result, test_step)
 
-        if "FAIL" in self.result_list:
-            self.log.error("### " + test_step + " ### TEST FAILED")
-            self.result_list.clear()
-            assert True is False, "### " + test_step + " ### TEST FAILED"
+        try:
+            if "FAIL" in self.result_list:
+                self.result_list.clear()
+                assert True is False
 
-        else:
-            self.log.info("### " + test_step + "### TEST SUCCESSFUL")
-            self.result_list.clear()
-            assert True is True, "### " + test_step + "### TEST SUCCESSFUL"
+            else:
+                self.result_list.clear()
+                assert True is True, "### TEST SUCCESSFUL :: " + test_step
+
+        except Exception:
+            pytest.fail("### TEST FAILED :: " + test_step, pytrace=False)
+

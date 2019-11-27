@@ -1,34 +1,29 @@
 """ This module contains all test cases."""
 
 import sys
-import logging
-import unittest
 import allure
 import pytest
 from BaseAPI.base_api import BaseAPI
 from FrameworkUtilities.execution_status_utility import ExecutionStatus
-import FrameworkUtilities.logger_utility as log_utils
 from FrameworkUtilities.data_reader_utility import DataReader
 
+exe_status = ExecutionStatus()
+base_api = BaseAPI()
+data_reader = DataReader()
 
-@allure.story('Test Automation Demo for APIs')
-@allure.feature('API Response Verification Using Requests')
-@pytest.mark.usefixtures("rp_logger")
-class BaseAPITests(unittest.TestCase):
-    """
-    This class contains the executable test cases.
-    """
 
-    data_reader = DataReader()
+@pytest.mark.usefixtures('initialize')
+class TestAPI:
 
-    def setUp(self):
-        self.exe_status = ExecutionStatus()
-        self.base_api = BaseAPI()
-        self.log = log_utils.custom_logger(logging.INFO)
+    @pytest.fixture(scope='function')
+    def initialize(self, rp_logger):
+        exe_status.__init__()
 
-    def tearDown(self):
-        # add db cleaning code here
-        pass
+        def cleanup():
+            rp_logger.info('Cleaning Test Data.')
+            print("Cleaning Test Data.")
+        yield
+        cleanup()
 
     @pytest.fixture(autouse=True)
     def class_level_setup(self, request):
@@ -38,7 +33,7 @@ class BaseAPITests(unittest.TestCase):
         :return: it returns nothing
         """
 
-        if self.data_reader.get_data(request.function.__name__, "Runmode") != "Y":
+        if data_reader.get_data(request.function.__name__, "Runmode") != "Y":
             pytest.skip("Excluded from current execution run.")
 
     @allure.testcase("Get All Users")
@@ -55,8 +50,8 @@ class BaseAPITests(unittest.TestCase):
                        test_name + " ######")
 
         with allure.step("Get all users for this specific endpoint"):
-            result = self.base_api.verify_users()
-            self.exe_status.mark_final(test_step=test_name, result=result)
+            result = base_api.verify_users()
+            exe_status.mark_final(test_step=test_name, result=result)
 
     @allure.testcase("Verify Valid User")
     @pytest.mark.regression
@@ -71,14 +66,14 @@ class BaseAPITests(unittest.TestCase):
         rp_logger.info("###### TEST EXECUTION STARTED :: " +
                        test_name + " ######")
 
-        first_name = self.data_reader.get_data(test_name, 'FirstName')
-        last_name = self.data_reader.get_data(test_name, 'LastName')
-        email = self.data_reader.get_data(test_name, 'Email')
+        first_name = data_reader.get_data(test_name, 'FirstName')
+        last_name = data_reader.get_data(test_name, 'LastName')
+        email = data_reader.get_data(test_name, 'Email')
 
         with allure.step("Verify whether user exists"):
-            result = self.base_api.verify_valid_user(
+            result = base_api.verify_valid_user(
                 email, first_name, last_name)
-            self.exe_status.mark_final(test_step=test_name, result=result)
+            exe_status.mark_final(test_step=test_name, result=result)
 
     @allure.testcase("Verify Invalid User")
     @pytest.mark.regression
@@ -93,15 +88,11 @@ class BaseAPITests(unittest.TestCase):
         rp_logger.info("###### TEST EXECUTION STARTED :: " +
                        test_name + " ######")
 
-        first_name = self.data_reader.get_data(test_name, 'FirstName')
-        last_name = self.data_reader.get_data(test_name, 'LastName')
-        email = self.data_reader.get_data(test_name, 'Email')
+        first_name = data_reader.get_data(test_name, 'FirstName')
+        last_name = data_reader.get_data(test_name, 'LastName')
+        email = data_reader.get_data(test_name, 'Email')
 
         with allure.step("Verify whether user exists"):
-            result = self.base_api.verify_valid_user(
+            result = base_api.verify_valid_user(
                 email, first_name, last_name)
-            self.exe_status.mark_final(test_step=test_name, result=result)
-
-
-if __name__ == '__main__':
-    unittest.main(verbosity=2)
+            exe_status.mark_final(test_step=test_name, result=result)
