@@ -12,5 +12,8 @@ py.cleanup -p && py.test -m regression --alluredir ExecutionReports/
 ## Only cleanup cache
 py.cleanup -p
 
-#### Trigger Allure Reports
+## Trigger Allure Reports
 allure serve ExecutionReports
+
+## Report Portal Commands
+py.cleanup -p && py.test --reportportal

@@ -23,7 +23,8 @@ class BaseAPI:
         :return: this function returns boolean status of element located
         """
         result = False
-        res = self.api.get_api_response(endpoint=self.prop.get('RAFT', 'base_api'))
+        res = self.api.get_api_response(
+            endpoint=self.prop.get('RAFT', 'base_api'))
         if res is not None:
             res = res.json()
             self.log.info(res)
@@ -40,7 +41,8 @@ class BaseAPI:
         :return: status of the valid user
         """
         result = False
-        res = self.api.get_api_response(endpoint=self.prop.get('RAFT', 'base_api'))
+        res = self.api.get_api_response(
+            endpoint=self.prop.get('RAFT', 'base_api'))
         if res is not None:
             res = res.json()
             self.log.info(res)

@@ -5,7 +5,7 @@ import pytest
 def rp_logger(request):
     import logging
     logger = logging.getLogger(__name__)
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.INFO)
     if hasattr(request.node.config, 'py_test_service'):
         from pytest_reportportal import RPLogger, RPLogHandler
         logging.setLoggerClass(RPLogger)
@@ -14,4 +14,4 @@ def rp_logger(request):
         import sys
         rp_handler = logging.StreamHandler(sys.stdout)
     rp_handler.setLevel(logging.INFO)
-    return logger
+    yield logger

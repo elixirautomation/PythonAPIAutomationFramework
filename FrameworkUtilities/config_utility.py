@@ -21,7 +21,8 @@ class ConfigUtility:
     def __init__(self):
         # self.log = log_utils.custom_logger(logging.INFO)
         self.cur_path = os.path.abspath(os.path.dirname(__file__))
-        self.config_path = os.path.join(self.cur_path, r"../ConfigFiles/config.ini")
+        self.config_path = os.path.join(
+            self.cur_path, r"../ConfigFiles/config.ini")
 
     def load_properties_file(self):
         """
@@ -36,7 +37,8 @@ class ConfigUtility:
             config.read(self.config_path)
 
         except Exception as ex:
-            self.log.error("Failed to load ini/properties file.", ex)
+            self.log.error(
+                "Failed to load ini/properties file.\n{}".format(ex))
             print_stack()
 
         return config
@@ -61,7 +63,8 @@ class ConfigUtility:
             return True
 
         except Exception as ex:
-            self.log.error("Failed to change ini/properties file.", ex)
+            self.log.error(
+                "Failed to change ini/properties file.\n{}".format(ex))
             print_stack()
             return False
 
@@ -76,7 +79,7 @@ class ConfigUtility:
                 data = json.load(jsonFile)
 
             return data
-        except Exception as Ex:
-            self.log.error("Failed to load json file.", Ex)
+        except Exception as ex:
+            self.log.error("Failed to load json file.\n{}".format(ex))
             print_stack()
             return None

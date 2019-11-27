@@ -51,3 +51,17 @@
     ```sh
     allure serve ExecutionReports/
     ```
+
+## Report Portal Integration
+- Install and Configure [Report Portal](https://reportportal.io/download)
+
+- Change Configuration in pytest.ini file 
+  - rp_uuid
+  - rp_endpoint
+  - rp_project
+
+- Run following command to record the results for Report Portal
+  
+  ```sh
+  py.cleanup -p && py.test --reportportal
+  ```

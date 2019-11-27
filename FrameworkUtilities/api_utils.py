@@ -32,7 +32,7 @@ class APIUtilily:
             else:
                 res = None
         except Exception as ex:
-            self.log.error("Failed to get the response.", ex)
+            self.log.error("Failed to get the response.\n{}".format(ex))
             print_stack()
 
         return res
