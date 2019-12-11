@@ -3,7 +3,7 @@
 import sys
 import allure
 import pytest
-from BaseAPI.base_api import BaseAPI
+from APIObjects.base_api import BaseAPI
 from FrameworkUtilities.execution_status_utility import ExecutionStatus
 from FrameworkUtilities.data_reader_utility import DataReader
 
@@ -20,8 +20,8 @@ class TestAPI:
         exe_status.__init__()
 
         def cleanup():
+            # data cleaning steps to be written here
             rp_logger.info('Cleaning Test Data.')
-            print("Cleaning Test Data.")
         yield
         cleanup()
 

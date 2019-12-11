@@ -19,7 +19,6 @@ class ConfigUtility:
     log = log_utils.custom_logger(logging.INFO)
 
     def __init__(self):
-        # self.log = log_utils.custom_logger(logging.INFO)
         self.cur_path = os.path.abspath(os.path.dirname(__file__))
         self.config_path = os.path.join(
             self.cur_path, r"../ConfigFiles/config.ini")
